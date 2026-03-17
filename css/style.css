@@ -97,19 +97,23 @@ a{color:inherit}
 
 .menu{
   display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+  align-items: center;
 }
-.menu a{
-  text-decoration:none;
-  color:var(--muted);
-  font-size:13px;
-  padding: 8px 10px;
+.menu .btn{
+  padding: 8px 16px;
+  font-size: 13px;
   border-radius: 999px;
-  border: 1px solid transparent;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
-.menu a:hover{
-  border-color: rgba(0,0,0,.08);
-  background: rgba(0,0,0,.04);
-  color: var(--text);
+.menu .btn:hover{
+  background: #ffffff;
+  border-color: var(--brand2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(176, 122, 27, 0.12);
 }
 
 .cta{
@@ -297,6 +301,13 @@ section{padding: 22px 0; scroll-margin-top: 80px;}
 }
 .section-head h2:before {
   --side: left;
+}
+.box-head h3 {
+  font-size: clamp(20px, 2.5vw, 24px);
+  margin-bottom: 24px;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 .section-head p{margin:0; color:var(--muted); font-size:16px; max-width: 60ch;}
 
@@ -882,6 +893,6 @@ footer::before {
   .copyright {flex-direction: column; text-align: center; gap: 12px;}
   .pricing-card { min-width: 100%; flex: 1 1 100%; }
   .section-head h2:before, .section-head h2:after { display: none; }
-  .section-head h2 { white-space: normal; }
+  .section-head h2, .box-head h3 { white-space: normal; }
   footer { margin: 20px 22px 40px; }
 }
