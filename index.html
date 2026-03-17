@@ -17,6 +17,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="images/pexels-alexasfotos-2173872.jpg" media="(min-width: 921px)">
+  <link rel="preload" as="image" href="images/mobile/pexels-alexasfotos-2173872.jpg" media="(max-width: 920px)">
 
   <style>
     :root{
@@ -42,7 +44,7 @@
     }
 
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth; -webkit-text-size-adjust: 100%;}
     body{
       margin:0;
       font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
@@ -54,6 +56,8 @@
         var(--bg);
       overflow-x:hidden;
       line-height: 1.6;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* section reveal animation */
@@ -793,7 +797,16 @@
       gap: 20px;
     }
     @media (max-width: 920px) {
+      .hero { padding: 20px 0 10px; }
+      .hero-grid { gap: 12px; }
+      .panel .pad { padding: 24px 16px; }
+      h1 { font-size: 32px; margin-bottom: 16px; }
+      .lead { font-size: 16px; margin-bottom: 24px; }
       /* Images will be replaced with mobile versions via JS if isMobile is true */
+    }
+    .mosaic-item {
+      content-visibility: auto;
+      contain-intrinsic-size: 200px;
     }
     .mosaic-item{
       border-radius: 24px;
@@ -891,7 +904,8 @@
       .footer-content {grid-template-columns: 1fr; gap: 30px;}
       .copyright {flex-direction: column; text-align: center; gap: 12px;}
       .pricing-card { min-width: 100%; flex: 1 1 100%; }
-      .section-head h2:before, .section-head h2:after { max-width: 40px; }
+      .section-head h2:before, .section-head h2:after { display: none; }
+      .section-head h2 { white-space: normal; }
       footer { margin: 20px 22px 40px; }
     }
   </style>
@@ -1374,21 +1388,46 @@
     const isMobile = window.innerWidth <= 920;
 
     // Set initial background images (mobile optimization)
-    slides.forEach(slide => {
-      const bgUrl = slide.style.backgroundImage.replace(/url\(['"](.+)['"]\)/, '$1');
+    slides.forEach((slide, idx) => {
+      if (idx > 0) {
+        slide.dataset.src = slide.style.backgroundImage.replace(/url\(['"](.+)['"]\)/, '$1');
+        slide.style.backgroundImage = 'none';
+      }
+      
+      const bgUrl = slide.style.backgroundImage !== 'none' ? slide.style.backgroundImage.replace(/url\(['"](.+)['"]\)/, '$1') : slide.dataset.src;
+      
       if (isMobile && !bgUrl.startsWith('images/mobile/')) {
-        slide.style.backgroundImage = `url('images/mobile/${bgUrl.replace('images/', '')}')`;
+        const mobileUrl = `images/mobile/${bgUrl.replace('images/', '')}`;
+        if (idx === 0) {
+           slide.style.backgroundImage = `url('${mobileUrl}')`;
+        } else {
+           slide.dataset.src = mobileUrl;
+        }
       }
     });
+
+    // Handle LCP: Ensure first image is loaded ASAP
+    const firstSlide = slides[0];
+    if (firstSlide) {
+      const firstBg = firstSlide.style.backgroundImage.replace(/url\(['"](.+)['"]\)/, '$1');
+      const lcpImg = new Image();
+      lcpImg.src = firstBg;
+    }
 
     // Preload next image in slider
     function preloadNext(index) {
       const nextIndex = (index + 1) % slides.length;
       const nextSlide = slides[nextIndex];
-      let bgUrl = nextSlide.style.backgroundImage.replace(/url\(['"](.+)['"]\)/, '$1');
+      
+      let bgUrl = nextSlide.style.backgroundImage !== 'none' 
+        ? nextSlide.style.backgroundImage.replace(/url\(['"](.+)['"]\)/, '$1') 
+        : nextSlide.dataset.src;
       
       if (bgUrl) {
         const img = new Image();
+        img.onload = () => {
+          nextSlide.style.backgroundImage = `url('${bgUrl}')`;
+        };
         img.src = bgUrl;
       }
     }
@@ -1406,6 +1445,7 @@
     }
 
     if (slides.length > 1) {
+      preloadNext(0); // Preload second slide immediately after first is set
       setInterval(nextSlide, 5000); // 5 másodpercenként vált
     }
 
@@ -1457,9 +1497,23 @@
         if (style && style.includes('background-image')) {
           const newStyle = style.replace(/url\(['"]?([^'"]+)['"]?\)/, "url('images/mobile/$1')").replace('images/mobile/images/', 'images/mobile/');
           item.setAttribute('style', newStyle);
+          item.setAttribute('loading', 'lazy'); // Redundant but safe
         }
       });
     }
+
+    // Defer non-critical CSS if possible, but for a single file it's hard.
+    // Instead, we ensure all images have proper dimensions.
+    
+    // Smooth Scroll performance
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
 
     checkCookies();
   </script>
