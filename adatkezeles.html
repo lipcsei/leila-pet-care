@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Adatkezelési tájékoztató | Leila Pet Care Premium</title>
+  
+  <!-- Modern webfont -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #fdfaf5;
+      --card: #ffffff;
+      --stroke: rgba(176, 122, 27, 0.08);
+      --text: #2a1b0a;
+      --muted: #5a4628;
+      --muted2: #8a7350;
+      --brand: #b07a1b;
+      --brand2: #d4a753;
+      --shadow: 0 30px 60px -12px rgba(176, 122, 27, 0.12), 0 18px 36px -18px rgba(176, 122, 27, 0.15);
+      --shadow-sm: 0 10px 25px rgba(176, 122, 27, 0.06);
+      --radius: 32px;
+      --radius-sm: 20px;
+      --max: 1240px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    .container{max-width:var(--max); margin:0 auto; padding: 22px;}
+    
+    .topbar{
+      position:sticky; top:0; z-index:100;
+      background: #ffffff;
+      border-bottom: 1px solid var(--stroke);
+      padding: 10px 0;
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none;
+    }
+    .mark img{
+      width:100px; height:auto;
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 2px solid var(--brand);
+      background: #ffffff;
+      text-decoration:none;
+      font-weight: 700;
+      font-size:14px;
+      color: var(--brand);
+      transition: all 0.3s ease;
+    }
+    .btn:hover{
+      background: var(--brand);
+      color: #ffffff;
+    }
+
+    .content-panel {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow-sm);
+      padding: 60px;
+      margin: 40px 0;
+    }
+
+    h1, h2, h3 {
+      font-family: "Playfair Display", serif;
+      color: var(--text);
+      margin-top: 1.5em;
+    }
+    h1 { font-size: 3rem; margin-top: 0; }
+    h2 { font-size: 2rem; border-bottom: 2px solid var(--brand-light); padding-bottom: 10px; }
+    
+    p, li { color: var(--muted); }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 8px; }
+
+    footer {
+      padding: 24px 0;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius-sm);
+      color: var(--muted2);
+      font-size: 14px;
+      background: #ffffff;
+      max-width: var(--max);
+      margin: 40px auto 60px;
+      text-align: center;
+    }
+    .copyright-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 10px;
+    }
+    .copyright-links a {
+      text-decoration: none;
+      color: var(--muted2);
+      transition: color 0.2s;
+    }
+    .copyright-links a:hover { color: var(--brand); }
+
+    @media (max-width: 768px) {
+      .content-panel { padding: 30px 20px; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container nav">
+      <a class="brand" href="dorka1.html">
+        <div class="mark">
+          <img src="logo.png" alt="Leila Pet Care logo">
+        </div>
+      </a>
+      <a href="dorka1.html" class="btn">Vissza a főoldalra</a>
+    </div>
+  </div>
+
+  <main class="container">
+    <article class="content-panel">
+      <h1>Adatkezelési tájékoztató</h1>
+      <p>Frissítve: 2026. március 17.</p>
+
+      <h2>1. Adatkezelő adatai</h2>
+      <p>
+        <strong>Név:</strong> Szendrő Dorka<br>
+        <strong>Székhely:</strong> [Ide írd a címedet - pl. 1000 Budapest, Példa utca 1.]<br>
+        <strong>E-mail:</strong> info@leilapetcare.hu<br>
+        <strong>Telefonszám:</strong> +36 20 407 1644<br>
+        <strong>Adószám:</strong> [Ide írd az adószámodat - ha van]<br>
+      </p>
+      
+      <h2>2. A kezelt adatok köre és az adatkezelés célja</h2>
+      <p>A weboldalon található ajánlatkérő űrlap kitöltésekor az alábbi adatokat kezeljük:</p>
+      <ul>
+        <li><strong>Név:</strong> Azonosításhoz és megszólításhoz szükséges.</li>
+        <li><strong>Telefonszám:</strong> Gyors egyeztetéshez és kapcsolattartáshoz.</li>
+        <li><strong>Email cím:</strong> Írásos ajánlattételhez és visszaigazoláshoz.</li>
+        <li><strong>Helyszín (kerület):</strong> A kiszállási lehetőség ellenőrzéséhez.</li>
+        <li><strong>Kedvencre vonatkozó adatok:</strong> A szolgáltatás testreszabásához és az állat igényeinek megismeréséhez.</li>
+      </ul>
+
+      <h2>3. Az adatkezelés jogalapja</h2>
+      <p>Az adatkezelés az érintett (Ön) önkéntes hozzájárulásán alapul (GDPR 6. cikk (1) bekezdés a) pont), valamint a szerződéskötést megelőző lépések megtételéhez szükséges (GDPR 6. cikk (1) bekezdés b) pont).</p>
+
+      <h2>4. Adatfeldolgozók</h2>
+      <p>Adatai tárolása és kezelése során az alábbi szolgáltatókat vesszük igénybe:</p>
+      <ul>
+        <li><strong>Tárhely-szolgáltató:</strong> Rackforest Kft. (1132 Budapest, Victor Hugo utca 11. 5. em. B05001., info@rackforest.hu)</li>
+        <li><strong>Email küldő szolgáltatás:</strong> Mailjet (Sinch France SAS, 4 square de la Défense, 92400 Courbevoie, Franciaország) - az üzenetek továbbításához.</li>
+      </ul>
+
+      <h2>5. Az adatkezelés időtartama</h2>
+      <p>A személyes adatokat az ajánlatadástól számított 1 éven belül, vagy ha szerződés jön létre, a számviteli kötelezettségeknek megfelelően legalább 8 évig kezeljük, kivéve ha Ön korábban kéri azok törlését.</p>
+
+      <h2>6. Az Ön jogai</h2>
+      <p>Ön kérelmezheti az Adatkezelőtől az Önre vonatkozó személyes adatokhoz való hozzáférést, azok helyesbítését, törlését vagy kezelésének korlátozását, és tiltakozhat a személyes adatok kezelése ellen, valamint joga van az adathordozhatósághoz.</p>
+      <p>Panaszával fordulhat a Nemzeti Adatvédelmi és Információszabadság Hatósághoz (NAIH) is (www.naih.hu).</p>
+
+      <h2>7. Sütik (Cookie-k)</h2>
+      <p>A weboldal kényelmi sütiket használ a felhasználói élmény javítása érdekében. Ezekről a böngésző beállításaiban is tájékozódhat.</p>
+    </article>
+
+    <footer>
+      <div class="copyright-text">© 2026 Leila Pet Care Premium • Minden jog fenntartva</div>
+      <div class="copyright-links">
+        <a href="adatkezeles.html">Adatkezelési tájékoztató</a>
+        <a href="aszf.html">ÁSZF</a>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

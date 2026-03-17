@@ -1,0 +1,12 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/szendrod/public_html/
+    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp aszf.html $DEPLOYPATH
+    - /bin/cp adatkezeles.html $DEPLOYPATH
+    - /bin/cp leila_petcare.svg $DEPLOYPATH
+    - /bin/cp logo.png $DEPLOYPATH
+    - /bin/cp *.jpg $DEPLOYPATH
+    - /bin/cp *.JPG $DEPLOYPATH
+    - /bin/cp *.jpeg $DEPLOYPATH
