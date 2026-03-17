@@ -785,6 +785,24 @@ footer::before {
   gap: 20px;
 }
 @media (max-width: 920px) {
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  .nav .cta {
+    width: auto;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .nav .cta .btn {
+    width: auto;
+    white-space: nowrap;
+    padding: 12px 14px;
+    font-size: 14px;
+    min-width: 0;
+    text-align: center;
+  }
   .hero { padding: 20px 0 10px; }
   .hero-grid { gap: 12px; }
   .panel .pad { padding: 24px 16px; }
