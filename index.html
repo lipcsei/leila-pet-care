@@ -899,7 +899,7 @@
     <div class="container nav">
       <a class="brand" href="#top">
         <div class="mark">
-          <img src="logo.png" alt="Leila Pet Care logo">
+          <img src="logo.png" alt="Leila Pet Care logo" width="140" height="80" decoding="async">
         </div>
      
       </a>
@@ -1070,13 +1070,13 @@
             <p>Hiszem, hogy az állatok nem csupán kedvencek, hanem családtagok – ezért a gondozásuk is ezt a figyelmet és törődést érdemli.</p>
           </div>
           <div class="about-mosaic">
-            <div class="mosaic-item item-1" style="background-image: url('pexels-vafphotos-18126198.jpg');" title="Szeretetteljes gondoskodás"></div>
-            <div class="mosaic-item item-2" style="background-image: url('pexels-jozef-feher-356581-7473294.jpg');" title="Leila munkában"></div>
-            <div class="mosaic-item item-3" style="background-image: url('pexels-leonardo-de-oliveira-872270-2499282.jpg');" title="Szakértő figyelem"></div>
-            <div class="mosaic-item item-4" style="background-image: url('IMG_7824.JPG');" title="Boldog pillanatok"></div>
-            <div class="mosaic-item item-5" style="background-image: url('pexels-david-bartus-43782-1510543.jpg');" title="Biztonság és nyugalom"></div>
-            <div class="mosaic-item item-6" style="background-image: url('pexels-kournoutis-9327035.jpg');" title="Játékos percek"></div>
-            <div class="mosaic-item item-7" style="background-image: url('pexels-pixabay-39283.jpg');" title="Közös séta"></div>
+            <div class="mosaic-item item-1" style="background-image: url('pexels-vafphotos-18126198.jpg');" title="Szeretetteljes gondoskodás" loading="lazy"></div>
+            <div class="mosaic-item item-2" style="background-image: url('pexels-jozef-feher-356581-7473294.jpg');" title="Leila munkában" loading="lazy"></div>
+            <div class="mosaic-item item-3" style="background-image: url('pexels-leonardo-de-oliveira-872270-2499282.jpg');" title="Szakértő figyelem" loading="lazy"></div>
+            <div class="mosaic-item item-4" style="background-image: url('IMG_7824.JPG');" title="Boldog pillanatok" loading="lazy"></div>
+            <div class="mosaic-item item-5" style="background-image: url('pexels-david-bartus-43782-1510543.jpg');" title="Biztonság és nyugalom" loading="lazy"></div>
+            <div class="mosaic-item item-6" style="background-image: url('pexels-kournoutis-9327035.jpg');" title="Játékos percek" loading="lazy"></div>
+            <div class="mosaic-item item-7" style="background-image: url('pexels-pixabay-39283.jpg');" title="Közös séta" loading="lazy"></div>
           </div>
         </div>
       </div>
@@ -1369,6 +1369,17 @@
     const cards = document.querySelectorAll('.caption-card');
     let currentSlide = 0;
 
+    // Preload next image in slider
+    function preloadNext(index) {
+      const nextIndex = (index + 1) % slides.length;
+      const nextSlide = slides[nextIndex];
+      const bgUrl = nextSlide.style.backgroundImage.replace(/url\(['"](.+)['"]\)/, '$1');
+      if (bgUrl) {
+        const img = new Image();
+        img.src = bgUrl;
+      }
+    }
+
     function nextSlide() {
       slides[currentSlide].classList.remove('active');
       cards[currentSlide].classList.remove('active');
@@ -1377,6 +1388,8 @@
       
       slides[currentSlide].classList.add('active');
       cards[currentSlide].classList.add('active');
+      
+      preloadNext(currentSlide);
     }
 
     if (slides.length > 1) {
