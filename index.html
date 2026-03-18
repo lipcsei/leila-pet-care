@@ -427,13 +427,13 @@
             <h3>Ajánlatkérés</h3>
           </div>
           <form class="form" id="contactForm">
-            <input type="text" name="name" placeholder="Név" required>
-            <input type="tel" name="phone" placeholder="Telefonszám">
-            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="name" placeholder="Név" value="Teszt Elek" required>
+            <input type="tel" name="phone" placeholder="Telefonszám" value="+36301234567">
+            <input type="email" name="email" placeholder="Email" value="teszt@example.com" required>
 
             <select name="service" required>
-              <option value="" disabled selected>Válassz szolgáltatást…</option>
-              <option>BASIC CARE (Séta)</option>
+              <option value="" disabled>Válassz szolgáltatást…</option>
+              <option selected>BASIC CARE (Séta)</option>
               <option>PREMIUM CARE (Gondoskodás)</option>
               <option>MEDICAL CARE (Egészségügy)</option>
               <option>HOME CARE (Otthoni felügyelet)</option>
@@ -441,12 +441,12 @@
               <option>Havi gondoskodási csomag érdekel</option>
             </select>
 
-            <input type="text" name="location" placeholder="Helyszín (Budapest / kerület)">
-            <input type="text" name="time" placeholder="Mikor? (pl. 2026-03-10 18:00)">
-            <textarea name="details" placeholder="Mesélj egy kicsit a kedvencedről! Milyen kutyus/cica, mi a rutinja, és pontosan miben segíthetek?"></textarea>
+            <input type="text" name="location" placeholder="Helyszín (Budapest / kerület)" value="Budapest, XI. kerület">
+            <input type="text" name="time" placeholder="Mikor? (pl. 2026-03-10 18:00)" value="2026-04-01 10:00">
+            <textarea name="details" placeholder="Mesélj egy kicsit a kedvencedről! Milyen kutyus/cica, mi a rutinja, és pontosan miben segíthetek?">Ez egy automatikus teszt üzenet. Blöki kutya várja a sétát!</textarea>
 
             <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
-              <input type="checkbox" id="privacy" required style="width: auto; margin-top: 5px;">
+              <input type="checkbox" id="privacy" checked required style="width: auto; margin-top: 5px;">
               <label for="privacy" style="font-size: 12px; color: var(--muted2);">
                 Elolvastam és elfogadom az <a href="aszf.html" target="_blank">ÁSZF</a>-et és az <a href="adatkezeles.html" target="_blank">Adatkezelési tájékoztatót</a>.
               </label>
