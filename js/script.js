@@ -124,20 +124,7 @@ if (contactForm) {
     submitBtn.disabled = true;
     submitBtn.innerText = 'Küldés...';
 
-    // reCAPTCHA v3 handling
-    if (typeof grecaptcha !== 'undefined') {
-      grecaptcha.ready(function() {
-        grecaptcha.execute('YOUR_RECAPTCHA_SITE_KEY', {action: 'submit'}).then(function(token) {
-          formData.append('g-recaptcha-response', token);
-          sendFormData(formData, submitBtn, originalText);
-        });
-      });
-    } else {
-      // Fallback if reCAPTCHA is not loaded
-      alert('reCAPTCHA hiba. Kérjük, frissítse az oldalt!');
-      submitBtn.disabled = false;
-      submitBtn.innerText = originalText;
-    }
+    sendFormData(formData, submitBtn, originalText);
   });
 }
 

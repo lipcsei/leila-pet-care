@@ -2,6 +2,7 @@
 /**
  * Mailjet Email Sender Script for Leila Pet Care
  * This script handles the backend part of the contact form with security enhancements.
+ * Based on Mailjet Send API v3.1: https://dev.mailjet.com/email/guides/send-api-v31/
  */
 
 // --- SECURITY CONFIGURATION ---
@@ -24,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // --- CONFIGURATION ---
 // Mailjet API Credentials - TO BE FILLED BY USER
 $apiKey = '561961af822db7bad358a3c05e8a2e47';
-$apiSecret = '851f655cbc58ccbdfb22136ac2def1ae';
+$apiSecret = '10ccfd44073983456e358a90542330c2';
 
 // reCAPTCHA Secret Key - TO BE FILLED BY USER
 $recaptchaSecret = 'YOUR_RECAPTCHA_SECRET_KEY';
@@ -34,14 +35,13 @@ $toEmail = 'info@leilapetcare.hu';
 $toName = 'Dorka - Leila Pet Care';
 
 // --- DATA COLLECTION & SANITIZATION ---
-$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
-$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-$phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_SPECIAL_CHARS);
-$service = filter_input(INPUT_POST, 'service', FILTER_SANITIZE_SPECIAL_CHARS);
-$location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_SPECIAL_CHARS);
-$time = filter_input(INPUT_POST, 'time', FILTER_SANITIZE_SPECIAL_CHARS);
-$details = filter_input(INPUT_POST, 'details', FILTER_SANITIZE_SPECIAL_CHARS);
-$recaptchaToken = $_POST['g-recaptcha-response'] ?? '';
+$name = isset($_POST['name']) ? filter_var($_POST['name'], FILTER_SANITIZE_SPECIAL_CHARS) : null;
+$email = isset($_POST['email']) ? filter_var($_POST['email'], FILTER_SANITIZE_EMAIL) : null;
+$phone = isset($_POST['phone']) ? filter_var($_POST['phone'], FILTER_SANITIZE_SPECIAL_CHARS) : null;
+$service = isset($_POST['service']) ? filter_var($_POST['service'], FILTER_SANITIZE_SPECIAL_CHARS) : null;
+$location = isset($_POST['location']) ? filter_var($_POST['location'], FILTER_SANITIZE_SPECIAL_CHARS) : null;
+$time = isset($_POST['time']) ? filter_var($_POST['time'], FILTER_SANITIZE_SPECIAL_CHARS) : null;
+$details = isset($_POST['details']) ? filter_var($_POST['details'], FILTER_SANITIZE_SPECIAL_CHARS) : null;
 
 // --- VALIDATION ---
 if (!$name || !$email || !$service) {
@@ -53,22 +53,6 @@ if (!$name || !$email || !$service) {
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
     echo json_encode(['error' => 'Érvénytelen e-mail cím!']);
-    exit;
-}
-
-// --- reCAPTCHA VERIFICATION ---
-if (empty($recaptchaToken)) {
-    http_response_code(400);
-    echo json_encode(['error' => 'reCAPTCHA ellenőrzés szükséges!']);
-    exit;
-}
-
-$verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $recaptchaSecret . '&response=' . $recaptchaToken);
-$responseData = json_decode($verifyResponse);
-
-if (!$responseData->success || $responseData->score < 0.5) {
-    http_response_code(403);
-    echo json_encode(['error' => 'Bot tevékenység észlelve. Kérjük, próbálja újra később!']);
     exit;
 }
 
@@ -91,6 +75,7 @@ $mailData = [
                 'Name' => $name
             ],
             'Subject' => "Új ajánlatkérés: " . $service,
+            'TextPart' => "Új ajánlatkérés érkezett.\nNév: {$name}\nE-mail: {$email}\nTelefon: {$phone}\nSzolgáltatás: {$service}\nHelyszín: {$location}\nIdőpont: {$time}\nRészletek: {$details}",
             'HTMLPart' => "
                 <h3>Új üzenet érkezett a weboldalról:</h3>
                 <p><b>Név:</b> {$name}</p>
@@ -125,5 +110,22 @@ if ($httpCode === 200) {
 } else {
     http_response_code(500);
     error_log("Mailjet Error (" . $httpCode . "): " . $response);
-    echo json_encode(['error' => 'Hiba történt az üzenet küldése közben. Kérjük, próbálja meg később!']);
+    
+    // Részletesebb hibaüzenet összeállítása
+    $errorDetails = json_decode($response, true);
+    $errorMessage = 'Hiba történt az üzenet küldése közben.';
+    
+    if (isset($errorDetails['Messages'][0]['Errors'])) {
+        $errors = [];
+        foreach ($errorDetails['Messages'][0]['Errors'] as $err) {
+            $errors[] = $err['ErrorMessage'];
+        }
+        if (!empty($errors)) {
+            $errorMessage .= ' Részletek: ' . implode(', ', $errors);
+        }
+    } elseif (isset($errorDetails['ErrorMessage'])) {
+        $errorMessage .= ' Részletek: ' . $errorDetails['ErrorMessage'];
+    }
+
+    echo json_encode(['error' => $errorMessage]);
 }
