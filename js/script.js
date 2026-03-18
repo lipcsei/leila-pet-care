@@ -129,7 +129,7 @@ if (contactForm) {
 }
 
 function sendFormData(formData, submitBtn, originalText) {
-  fetch('send_smtp.php', {
+  fetch('send_mail.php', {
     method: 'POST',
     body: formData
   })
