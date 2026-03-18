@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    container_name: leila-pet-care-app
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - PHP_DISPLAY_ERRORS=1
+    restart: always
+
+# Megjegyzés: A 8080-as porton lesz elérhető az oldal (http://localhost:8080)

@@ -1,0 +1,7 @@
+.git
+.junie
+backup_images
+Dockerfile
+docker-compose.yml
+.dockerignore
+README.md
