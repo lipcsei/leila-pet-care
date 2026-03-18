@@ -117,21 +117,51 @@ if (contactForm) {
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // In a real environment, you would send this to a backend that uses Mailjet
-    // Since this is a static site, we'll simulate the success
     const submitBtn = contactForm.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerText;
+    const formData = new FormData(contactForm);
     
     submitBtn.disabled = true;
     submitBtn.innerText = 'Küldés...';
-    
-    // Simulating API call
-    setTimeout(() => {
-      alert('Köszönöm az üzenetedet! Hamarosan keresni foglak a megadott elérhetőségeken.');
-      contactForm.reset();
+
+    // reCAPTCHA v3 handling
+    if (typeof grecaptcha !== 'undefined') {
+      grecaptcha.ready(function() {
+        grecaptcha.execute('YOUR_RECAPTCHA_SITE_KEY', {action: 'submit'}).then(function(token) {
+          formData.append('g-recaptcha-response', token);
+          sendFormData(formData, submitBtn, originalText);
+        });
+      });
+    } else {
+      // Fallback if reCAPTCHA is not loaded
+      alert('reCAPTCHA hiba. Kérjük, frissítse az oldalt!');
       submitBtn.disabled = false;
       submitBtn.innerText = originalText;
-    }, 1500);
+    }
+  });
+}
+
+function sendFormData(formData, submitBtn, originalText) {
+  fetch('send_mail.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert(data.message || 'Köszönöm az üzenetedet! Hamarosan keresni foglak a megadott elérhetőségeken.');
+      contactForm.reset();
+    } else {
+      alert(data.error || 'Sajnos hiba történt a küldés során.');
+    }
+  })
+  .catch(error => {
+    console.error('Hiba:', error);
+    alert('Sajnos hiba történt. Kérlek, próbáld meg később vagy keress telefonon!');
+  })
+  .finally(() => {
+    submitBtn.disabled = false;
+    submitBtn.innerText = originalText;
   });
 }
 
