@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/szendrod/public_html/
+    - export DEPLOYPATH=/home/leilapetcare/public_html/
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp aszf.html $DEPLOYPATH
     - /bin/cp adatkezeles.html $DEPLOYPATH
