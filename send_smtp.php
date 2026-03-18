@@ -1,8 +1,16 @@
 <?php
 /**
  * SMTP Email Sender Script for Leila Pet Care
- * Ez a szkript a szerver saját SMTP szerverét vagy a PHP mail() függvényét használja.
+ * Ez a szkript az SMTP szerveren keresztüli küldést végzi el (hitelesítéssel).
+ * Javasolt PHPMailer használata (pl. composer require phpmailer/phpmailer).
  */
+
+// Ha van PHPMailer (ajánlott!), a következő sorokat kell használni:
+/*
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'vendor/autoload.php';
+*/
 
 // Security Headers
 header("X-Content-Type-Options: nosniff");
@@ -18,11 +26,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // --- CONFIGURATION ---
+// SMTP adatok (Töltse ki a saját adataihoz)
+$smtpHost = 'mail.leilapetcare.hu';   // SMTP szerver címe
+$smtpPort = 465;                  // SSL esetén 465, TLS esetén 587
+$smtpUsername = 'info@leilapetcare.hu'; // Felhasználónév
+$smtpPassword = 'uxzL1mKQSVcxjFlR';  // Jelszó
+$smtpAuth = true;                 // SMTP hitelesítés szükséges
+$smtpSecure = 'ssl';              // 'ssl' vagy 'tls'
+
 // Címzett adatai
 $toEmail = 'info@leilapetcare.hu';
 $toName = 'Dorka - Leila Pet Care';
 
-// Feladó adatai (érdemes a szerver saját domainjéhez tartozó címet használni)
+// Feladó adatai (Érdemes az SMTP felhasználónevével megegyezőt használni)
 $fromEmail = 'info@leilapetcare.hu';
 $fromName = 'Leila Pet Care Weboldal';
 
@@ -79,8 +95,37 @@ $headers .= "Reply-To: {$name} <{$email}>" . "\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion();
 
 // --- SENDING ---
-// A PHP mail() függvénye a php.ini-ben beállított SMTP szervert használja.
-// cPanel esetén ez általában automatikusan konfigurálva van a helyi SMTP-re.
+/**
+ * Ha PHPMailer-t használsz:
+ * 
+ * $mail = new PHPMailer(true);
+ * try {
+ *     $mail->isSMTP();
+ *     $mail->Host       = $smtpHost;
+ *     $mail->SMTPAuth   = $smtpAuth;
+ *     $mail->Username   = $smtpUsername;
+ *     $mail->Password   = $smtpPassword;
+ *     $mail->SMTPSecure = $smtpSecure; // PHPMailer::ENCRYPTION_STARTTLS (vagy implicit SSL esetén PHPMailer::ENCRYPTION_SMTPS)
+ *     $mail->Port       = $smtpPort;
+ *
+ *     $mail->setFrom($fromEmail, $fromName);
+ *     $mail->addAddress($toEmail, $toName);
+ *     $mail->addReplyTo($email, $name);
+ *
+ *     $mail->isHTML(true);
+ *     $mail->Subject = $subject;
+ *     $mail->Body    = $message;
+ *     $mail->AltBody = strip_tags($message);
+ *
+ *     $mail->send();
+ *     echo json_encode(['success' => true, 'message' => 'Üzenet sikeresen elküldve (SMTP)!']);
+ * } catch (Exception $e) {
+ *     http_response_code(500);
+ *     echo json_encode(['error' => "Hiba: {$mail->ErrorInfo}"]);
+ * }
+ */
+
+// Addig is, ha nincs PHPMailer, a natív mail() függvényt próbáljuk meg:
 if (mail($toEmail, $subject, $message, $headers)) {
     echo json_encode(['success' => true, 'message' => 'Üzenet sikeresen elküldve (SMTP)!']);
 } else {

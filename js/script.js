@@ -129,27 +129,56 @@ if (contactForm) {
 }
 
 function sendFormData(formData, submitBtn, originalText) {
-  fetch('send_mail.php', {
+  fetch('send_smtp.php', {
     method: 'POST',
     body: formData
   })
   .then(response => response.json())
   .then(data => {
     if (data.success) {
-      alert(data.message || 'Köszönöm az üzenetedet! Hamarosan keresni foglak a megadott elérhetőségeken.');
+      showModal('Siker!', data.message || 'Köszönöm az üzenetedet! Hamarosan keresni foglak a megadott elérhetőségeken.', true);
       contactForm.reset();
     } else {
-      alert(data.error || 'Sajnos hiba történt a küldés során.');
+      showModal('Hiba', data.error || 'Sajnos hiba történt a küldés során.', false);
     }
   })
   .catch(error => {
     console.error('Hiba:', error);
-    alert('Sajnos hiba történt. Kérlek, próbáld meg később vagy keress telefonon!');
+    showModal('Hiba', 'Sajnos hiba történt. Kérlek, próbáld meg később vagy keress telefonon!', false);
   })
   .finally(() => {
     submitBtn.disabled = false;
     submitBtn.innerText = originalText;
   });
+}
+
+// Modal handling
+function showModal(title, message, isSuccess) {
+  const modal = document.getElementById('messageModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalMessage = document.getElementById('modalMessage');
+  const modalIcon = document.getElementById('modalIcon');
+  const closeBtn = document.getElementById('closeModal');
+
+  modalTitle.innerText = title;
+  modalMessage.innerText = message;
+  
+  // Icon and style setup
+  modalIcon.className = 'modal-icon ' + (isSuccess ? 'success' : 'error');
+  modalIcon.innerHTML = isSuccess ? '✓' : '✕';
+
+  modal.classList.add('active');
+
+  const closeModalFunc = () => {
+    modal.classList.remove('active');
+  };
+
+  closeBtn.onclick = closeModalFunc;
+  
+  // Close on overlay click
+  modal.onclick = (e) => {
+    if (e.target === modal) closeModalFunc();
+  };
 }
 
 // Mobile optimization for mosaic images
