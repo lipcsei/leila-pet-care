@@ -3,7 +3,7 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/leilapetcare/public_html/
     - /bin/cp *.html $DEPLOYPATH
-    - /bin/cp send_mail.php $DEPLOYPATH
+    - /bin/cp send_mail*.php $DEPLOYPATH
     - /bin/cp -rf css $DEPLOYPATH
     - /bin/cp -rf js $DEPLOYPATH
     - /bin/cp -rf images $DEPLOYPATH
