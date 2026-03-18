@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Állatfelügyelet & gondozás | Műtét utáni felügyelet • Egészségügyi gondozás • Állatszállítás • Napi felügyelet</title>
   <meta name="description" content="Szeretetteljes, megbízható állatfelügyelet és gondozás: műtét utáni felügyelet, egészségügyi gondozás, állatszállítás, napi felügyelet." />
-  <meta name="robots" content="noindex, nofollow" />
+  <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leilapetcare.hu/" />
   <link rel="icon" type="image/png" href="images/logo.png" />
   <link rel="apple-touch-icon" href="images/logo.png" />
@@ -427,13 +427,13 @@
             <h3>Ajánlatkérés</h3>
           </div>
           <form class="form" id="contactForm">
-            <input type="text" name="name" placeholder="Név"  required>
-            <input type="tel" name="phone" placeholder="Telefonszám" >
-            <input type="email" name="email" placeholder="Email"  required>
+            <input type="text" name="name" placeholder="Név" required>
+            <input type="tel" name="phone" placeholder="Telefonszám">
+            <input type="email" name="email" placeholder="Email" required>
 
             <select name="service" required>
-              <option value="" disabled>Válassz szolgáltatást…</option>
-              <option >BASIC CARE (Séta)</option>
+              <option value="" disabled selected>Válassz szolgáltatást…</option>
+              <option>BASIC CARE (Séta)</option>
               <option>PREMIUM CARE (Gondoskodás)</option>
               <option>MEDICAL CARE (Egészségügy)</option>
               <option>HOME CARE (Otthoni felügyelet)</option>
@@ -441,12 +441,12 @@
               <option>Havi gondoskodási csomag érdekel</option>
             </select>
 
-            <input type="text" name="location" placeholder="Helyszín (Budapest / kerület)" >
-            <input type="date" name="time">
+            <input type="text" name="location" placeholder="Helyszín (Budapest / kerület)">
+            <input type="text" name="time" placeholder="Válaszd ki a dátumot" onfocus="(this.type='date')" onblur="(this.type='text')">
             <textarea name="details" placeholder="Mesélj egy kicsit a kedvencedről! Milyen kutyus/cica, mi a rutinja, és pontosan miben segíthetek?"></textarea>
 
             <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
-              <input type="checkbox" id="privacy" checked required style="width: auto; margin-top: 5px;">
+              <input type="checkbox" id="privacy" required style="width: auto; margin-top: 5px;">
               <label for="privacy" style="font-size: 12px; color: var(--muted2);">
                 Elolvastam és elfogadom az <a href="aszf.html" target="_blank">ÁSZF</a>-et és az <a href="adatkezeles.html" target="_blank">Adatkezelési tájékoztatót</a>.
               </label>
