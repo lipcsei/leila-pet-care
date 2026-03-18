@@ -118,7 +118,7 @@ $headers .= "X-Mailer: PHP/" . phpversion();
  *     $mail->AltBody = strip_tags($message);
  *
  *     $mail->send();
- *     echo json_encode(['success' => true, 'message' => 'Üzenet sikeresen elküldve (SMTP)!']);
+ *     echo json_encode(['success' => true, 'message' => 'Köszönöm az üzenetedet! Hamarosan keresni foglak a megadott elérhetőségeken.']);
  * } catch (Exception $e) {
  *     http_response_code(500);
  *     echo json_encode(['error' => "Hiba: {$mail->ErrorInfo}"]);
@@ -127,7 +127,7 @@ $headers .= "X-Mailer: PHP/" . phpversion();
 
 // Addig is, ha nincs PHPMailer, a natív mail() függvényt próbáljuk meg:
 if (mail($toEmail, $subject, $message, $headers)) {
-    echo json_encode(['success' => true, 'message' => 'Üzenet sikeresen elküldve (SMTP)!']);
+    echo json_encode(['success' => true, 'message' => 'Köszönöm az üzenetedet! Hamarosan keresni foglak a megadott elérhetőségeken.']);
 } else {
     http_response_code(500);
     error_log("Helyi mail() küldési hiba a következő címre: " . $toEmail);

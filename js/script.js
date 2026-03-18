@@ -136,7 +136,7 @@ function sendFormData(formData, submitBtn, originalText) {
   .then(response => response.json())
   .then(data => {
     if (data.success) {
-      showModal('Siker!', data.message || 'Köszönöm az üzenetedet! Hamarosan keresni foglak a megadott elérhetőségeken.', true);
+      showModal('Köszönöm!', data.message || 'Hamarosan keresni foglak a megadott elérhetőségeken.', true);
       contactForm.reset();
     } else {
       showModal('Hiba', data.error || 'Sajnos hiba történt a küldés során.', false);
