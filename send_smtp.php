@@ -65,13 +65,13 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // --- EMAIL CONTENT PREPARATION ---
-$subject = "Új ajánlatkérés (SMTP): " . $service;
+$subject = "Új érdeklődő: " . $service;
 
 // HTML tartalom összeállítása
 $message = "
 <html>
 <head>
-    <title>Új ajánlatkérés</title>
+    <title>Új érdeklődő</title>
 </head>
 <body>
     <h3>Új üzenet érkezett a weboldalról:</h3>
