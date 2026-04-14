@@ -262,6 +262,9 @@ h2{
 .caption-card.active {
   display: flex;
 }
+.caption-card.no-caption.active {
+  display: none;
+}
 @keyframes slideInUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
@@ -908,6 +911,11 @@ footer::before {
   .hero-img{min-height: 320px}
   .about-mosaic{order: -1; grid-template-rows: repeat(9, 45px); margin-bottom: 20px; gap: 6px;}
   .mosaic-item{border: none; border-radius: 14px;}
+  .hero-img .caption{padding: 2px 8px 16px;}
+  .caption-card{gap: 12px;}
+  .pulse{width: 18px; height: 18px; border-radius: 6px; font-size: 10px;}
+  .caption-card b{font-size: 9px;}
+  .caption-card span{font-size: 8px; margin-top: 0;}
   .footer-content {grid-template-columns: 1fr; gap: 30px;}
   .copyright {flex-direction: column; text-align: center; gap: 12px;}
   .pricing-card { min-width: 100%; flex: 1 1 100%; }
