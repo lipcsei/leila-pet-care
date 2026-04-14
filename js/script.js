@@ -78,12 +78,14 @@ function preloadNext(index) {
 function nextSlide() {
   slides[currentSlide].classList.remove('active');
   cards[currentSlide].classList.remove('active');
-  
+
   currentSlide = (currentSlide + 1) % slides.length;
-  
+
   slides[currentSlide].classList.add('active');
-  cards[currentSlide].classList.add('active');
-  
+  if (!cards[currentSlide].classList.contains('no-caption')) {
+    cards[currentSlide].classList.add('active');
+  }
+
   preloadNext(currentSlide);
 }
 
